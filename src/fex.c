@@ -1,5 +1,5 @@
 #include "fex.h"
-void main()
+int main(void)
 {
 	setupConsole();
 	startLoop();
