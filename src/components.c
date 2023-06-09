@@ -44,7 +44,7 @@ void show_current_directory_header(int rows, int cols)
 	}
 	if (state.n_directories)
 	{
-		printf("Subdirectories: %c%s%d ", ESC, BOLD, state.n_directories - 2);
+		printf("Subdirectories: %c%s%d ", ESC, BOLD, state.n_directories);
 		printf("%c%s", ESC, RESET);
 		empty = false;
 	}
