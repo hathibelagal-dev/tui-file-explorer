@@ -1,3 +1,20 @@
+/*
+ * This file is part of tui-file-explorer
+ * Copyright (c) 2023 Ashraff Hathibelagal
+ *
+ * tui-file-explorer is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * tui-file-explorer is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with tui-file-explorer. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "utils.h"
 #include <stdio.h>
 #include <sys/ioctl.h>
@@ -6,6 +23,7 @@
 #include <string.h>
 #include "components.h"
 #include <unistd.h>
+#include <stdbool.h>
 #include "styles.h"
 
 struct termios modified_config;
@@ -56,17 +74,28 @@ void reset_console()
 void start_loop()
 {
     char input = 0;
+    bool valid = true;
     while (input != 'q')
     {
-        if (input == 'p')
+        switch (input)
         {
+        case 'p':
             goto_directory("..");
-        }
-        if (input == 'b')
-        {
+            valid = true;
+            break;
+        case 'b':
             goto_directory(state.prev_path);
+            valid = true;
+            break;
+        case 'r':
+            valid = true;
+            break;
         }
-        render();
+        if (valid)
+        {
+            render();
+            valid = false;
+        }
         input = getchar();
     }
     reset_console();
