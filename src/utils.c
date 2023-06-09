@@ -1,6 +1,7 @@
 #include "utils.h"
 #include <stdio.h>
 #include <termios.h>
+#include "components.h"
 
 struct termios modified_config;
 struct termios original_config;
@@ -31,5 +32,5 @@ void startLoop()
 
 void render()
 {
-    printf("%c[2J", 27);
+    renderWindow();
 }
