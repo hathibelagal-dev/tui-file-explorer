@@ -36,6 +36,7 @@ struct fex_state
     int n_symlinks;
     int list_top;
     int selected_index;
+    bool at_home;
     struct dir_entry_info entries[MAX_FILES];
 
     int n_cols;
@@ -46,3 +47,4 @@ struct fex_state state;
 #endif
 
 void update_state();
+void set_directory_contents();

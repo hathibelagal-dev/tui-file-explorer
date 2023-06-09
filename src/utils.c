@@ -24,8 +24,8 @@
 #include <string.h>
 #include "components.h"
 #include <unistd.h>
-#include <stdbool.h>
 #include <dirent.h>
+#include <stdlib.h>
 #include "styles.h"
 
 struct termios modified_config;
@@ -51,15 +51,20 @@ void get_pos(char *str, int row, int col)
     sprintf(str, "%c[%d;%dH", ESC, row, col);
 }
 
-void goto_directory(const char *path)
+bool goto_directory(const char *path)
 {
+    if (strcmp(state.current_path, path) == 0)
+    {
+        return false;
+    }
     int result = chdir(path);
     if (result != 0)
     {
-        return;
+        return false;
     }
     strcpy(state.prev_path, state.current_path);
     update_state();
+    return true;
 }
 
 void reset_cursor()
@@ -77,6 +82,15 @@ void start_loop()
 {
     char input = 0;
     bool valid = true;
+    char home[MAX_PATH_LEN] = "\0";
+    {
+        char *t_home;
+        t_home = getenv("HOME");
+        if (t_home != NULL)
+        {
+            strcpy(home, t_home);
+        }
+    }
     while (input != 'q')
     {
         switch (input)
@@ -117,9 +131,16 @@ void start_loop()
             }
             valid = true;
             break;
+        case 'h':
+            if (strlen(home) > 0)
+            {
+                valid = goto_directory(home);
+            }
+            break;
         }
         if (valid)
         {
+            state.at_home = strlen(home) > 0 && strcmp(home, state.current_path) == 0;
             render();
             valid = false;
         }

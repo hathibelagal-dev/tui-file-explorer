@@ -33,7 +33,16 @@ void show_current_directory_header(int rows, int cols)
 	int i = 0;
 	bool empty = true;
 	get_pos(pos, 2, 4);
-	printf("%s📂 %c%s%c%s%s", pos, ESC, BLUE, ESC, BOLD, state.current_path);
+	printf("%s", pos);
+	if (state.at_home)
+	{
+		printf("🏠 ");
+	}
+	else
+	{
+		printf("📂 ");
+	}
+	printf("%c%s%c%s%s", ESC, BLUE, ESC, BOLD, state.current_path);
 	get_pos(pos, 3, 7);
 	printf("%c%s%s", ESC, RESET, pos);
 	if (state.n_files)

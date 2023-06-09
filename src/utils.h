@@ -15,6 +15,8 @@
  * along with tui-file-explorer. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <stdbool.h>
+
 #ifndef UTILS
 #define UTILS
 #define MAX_PATH_LEN 512
@@ -33,4 +35,4 @@ void reset_cursor();
 void reset_console();
 void render();
 void get_pos(char *str, int v, int h);
-void goto_directory(const char *);
+bool goto_directory(const char *);
