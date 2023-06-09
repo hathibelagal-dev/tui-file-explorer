@@ -13,4 +13,4 @@ struct fex_state
 struct fex_state state;
 #endif
 
-void updateState();
+void update_state();

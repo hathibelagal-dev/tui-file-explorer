@@ -2,38 +2,35 @@
 #include "utils.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "colors.h"
+#include "styles.h"
 #include "state.h"
 
-void getPos(char *str, int row, int col)
-{
-	sprintf(str, "%c[%d;%dH", ESC, row, col);
-}
-
-void showCurrentDirectory()
+void show_current_directory()
 {
 	char pos[15];
-	getPos(pos, 2, 4);
-	printf("%s📂 %s", pos, state.current_path);
+	get_pos(pos, 2, 4);
+	printf("%s📂 %c%s%c%s%s", pos, ESC, BLUE, ESC, BOLD, state.current_path);
 }
 
-void renderWindow(int rows, int cols)
+void render_window(int rows, int cols)
 {
 	int i;
-	char pos[15];
-	resetCursor();
+	char pos[16];
+	reset_cursor();
 	for (i = -1; i < cols; i += 2)
 	{
-		getPos(pos, 0, i);
+		get_pos(pos, 0, i);
 		printf("%s%s ", pos, "◻️");
-		getPos(pos, rows - 1, i);
+		get_pos(pos, rows - 1, i);
 		printf("%s%s ", pos, "◻️");
 	}
 	for (i = 1; i < rows; i++)
 	{
-		getPos(pos, i, 0);
+		get_pos(pos, i, 0);
 		printf("%s%s ", pos, "◻️");
-		getPos(pos, i, cols - 1);
+		get_pos(pos, i, cols - 1);
 		printf("%s%s ", pos, "◻️");
 	}
-	showCurrentDirectory();
+	show_current_directory();
 }

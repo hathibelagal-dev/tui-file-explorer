@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <errno.h>
 
-void setCurrentPath()
+void set_current_path()
 {
     char path[MAX_PATH_LEN];
     getcwd(path, MAX_PATH_LEN);
@@ -21,12 +21,12 @@ void setCurrentPath()
     }
 }
 
-void setDirectoryContents()
+void set_directory_contents()
 {
 }
 
-void updateState(int cols)
+void update_state()
 {
-    setCurrentPath();
-    setDirectoryContents();
+    set_current_path();
+    set_directory_contents();
 }

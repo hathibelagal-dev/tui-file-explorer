@@ -4,12 +4,13 @@
 #include <termios.h>
 #include "state.h"
 #include "components.h"
+#include "styles.h"
 
 struct termios modified_config;
 struct termios original_config;
 struct winsize window_size;
 
-void setupConsole()
+void setup_console()
 {
     tcgetattr(0, &modified_config);
     tcgetattr(0, &original_config);
@@ -18,23 +19,28 @@ void setupConsole()
     ioctl(fileno(stdout), TIOCGWINSZ, &window_size);
 }
 
-void hideCursor()
+void hide_cursor()
 {
     printf("%c?25l", ESC);
 }
 
-void resetCursor()
+void get_pos(char *str, int row, int col)
 {
-    printf("%c[2J%c[;H", ESC, ESC);
+    sprintf(str, "%c[%d;%dH", ESC, row, col);
 }
 
-void resetConsole()
+void reset_cursor()
 {
-    resetCursor();
+    printf("%c[2J%c[;H%c%s", ESC, ESC, ESC, DEFAULT);
+}
+
+void reset_console()
+{
+    reset_cursor();
     tcsetattr(fileno(stdin), TCSANOW, &original_config);
 }
 
-void startLoop()
+void start_loop()
 {
     char input = 0;
     while (input != 'q')
@@ -42,7 +48,7 @@ void startLoop()
         render();
         input = getchar();
     }
-    resetConsole();
+    reset_console();
 }
 
 void render()
@@ -51,7 +57,7 @@ void render()
     if (window_size.ws_col != state.n_cols)
     {
         state.n_cols = window_size.ws_col;
-        updateState();
+        update_state();
     }
-    renderWindow(window_size.ws_row, window_size.ws_col);
+    render_window(window_size.ws_row, window_size.ws_col);
 }

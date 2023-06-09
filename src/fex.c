@@ -1,6 +1,6 @@
 #include "fex.h"
 int main(void)
 {
-	setupConsole();
-	startLoop();
+	setup_console();
+	start_loop();
 }
