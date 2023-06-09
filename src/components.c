@@ -71,7 +71,7 @@ void show_directory_contents(int rows)
 	char pos[POS_SIZE];
 	int i = 5;
 	int j;
-	int max_visible = rows - 4;
+	int max_visible = rows - 2;
 	int highest_visible_index = max_visible / 2 - 3;
 	int padding_len;
 	int k;
@@ -86,7 +86,7 @@ void show_directory_contents(int rows)
 	{
 		get_pos(pos, i, 4);
 		printf("%s", pos);
-		padding_len = 30 - (3 + strlen(state.entries[j].entry_name));
+		padding_len = MAX_FILE_DISPLAY_ITEM_LEN - (3 + strlen(state.entries[j].entry_name));
 		if (j == state.selected_index)
 		{
 			printf("%c%s", ESC, BG_GREEN);
@@ -139,6 +139,11 @@ void render_window(int rows, int cols)
 		printf("%s%s ", pos, "◻️");
 		get_pos(pos, i, cols - 1);
 		printf("%s%s ", pos, "◻️");
+		if (i > 4)
+		{
+			get_pos(pos, i, MAX_FILE_DISPLAY_ITEM_LEN + 5);
+			printf("%s%s", pos, "◻️");
+		}
 	}
 	show_current_directory_header(rows, cols);
 	show_directory_contents(rows);
