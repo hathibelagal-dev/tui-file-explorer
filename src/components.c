@@ -4,13 +4,39 @@
 #include <stdlib.h>
 #include "colors.h"
 #include "styles.h"
+#include <stdbool.h>
 #include "state.h"
 
-void show_current_directory()
+void show_current_directory_header()
 {
 	char pos[15];
 	get_pos(pos, 2, 4);
 	printf("%s📂 %c%s%c%s%s", pos, ESC, BLUE, ESC, BOLD, state.current_path);
+	get_pos(pos, 3, 4);
+	printf("%c%s%s", ESC, RESET, pos);
+	bool empty = true;
+	if (state.n_files)
+	{
+		printf("Files: %c%s%d ", ESC, BOLD, state.n_files);
+		printf("%c%s", ESC, RESET);
+		empty = false;
+	}
+	if (state.n_directories)
+	{
+		printf("Subdirectories: %c%s%d ", ESC, BOLD, state.n_directories - 2);
+		printf("%c%s", ESC, RESET);
+		empty = false;
+	}
+	if (state.n_symlinks)
+	{
+		printf("Symlinks: %c%s%d ", ESC, BOLD, state.n_symlinks);
+		printf("%c%s", ESC, RESET);
+		empty = false;
+	}
+	if (empty)
+	{
+		printf("🤷 Empty directory");
+	}
 }
 
 void render_window(int rows, int cols)
@@ -32,5 +58,5 @@ void render_window(int rows, int cols)
 		get_pos(pos, i, cols - 1);
 		printf("%s%s ", pos, "◻️");
 	}
-	show_current_directory();
+	show_current_directory_header();
 }
