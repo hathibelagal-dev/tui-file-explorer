@@ -19,4 +19,6 @@
 #define COLORS
 #define GREEN "[32m"
 #define BLUE "[34m"
+#define BG_GREEN "[42m"
+#define BG_BLUE "[44m"
 #endif

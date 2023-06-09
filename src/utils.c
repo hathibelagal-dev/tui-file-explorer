@@ -15,6 +15,7 @@
  * along with tui-file-explorer. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#define _DEFAULT_SOURCE
 #include "utils.h"
 #include <stdio.h>
 #include <sys/ioctl.h>
@@ -24,6 +25,7 @@
 #include "components.h"
 #include <unistd.h>
 #include <stdbool.h>
+#include <dirent.h>
 #include "styles.h"
 
 struct termios modified_config;
@@ -41,7 +43,7 @@ void setup_console()
 
 void hide_cursor()
 {
-    printf("%c?25l", ESC);
+    printf("%c[?25l", ESC);
 }
 
 void get_pos(char *str, int row, int col)
@@ -87,7 +89,32 @@ void start_loop()
             goto_directory(state.prev_path);
             valid = true;
             break;
+        case 'w':
+            state.selected_index -= 1;
+            if (state.selected_index < 0)
+            {
+                state.selected_index = 0;
+            }
+            valid = true;
+            break;
+        case 's':
+            state.selected_index += 1;
+            if (state.selected_index >= state.n_entries - 1)
+            {
+                state.selected_index = state.n_entries - 1;
+            }
+            valid = true;
+            break;
         case 'r':
+            valid = true;
+            break;
+        case ' ':
+            if (state.entries[state.selected_index].entry_type == DT_DIR)
+            {
+                char new_path[MAX_PATH_LEN];
+                sprintf(new_path, "./%s", state.entries[state.selected_index].entry_name);
+                goto_directory(new_path);
+            }
             valid = true;
             break;
         }
@@ -104,9 +131,10 @@ void start_loop()
 void render()
 {
     ioctl(fileno(stdout), TIOCGWINSZ, &window_size);
-    if (window_size.ws_col != state.n_cols)
+    if (window_size.ws_col != state.n_cols || window_size.ws_row != state.n_rows)
     {
         state.n_cols = window_size.ws_col;
+        state.n_rows = window_size.ws_row;
         update_state();
     }
     render_window(window_size.ws_row, window_size.ws_col);

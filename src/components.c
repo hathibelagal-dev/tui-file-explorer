@@ -24,6 +24,7 @@
 #include "styles.h"
 #include <stdbool.h>
 #include <dirent.h>
+#include <string.h>
 #include "state.h"
 
 void show_current_directory_header(int rows, int cols)
@@ -69,31 +70,55 @@ void show_directory_contents(int rows)
 {
 	char pos[POS_SIZE];
 	int i = 5;
-	int j = state.list_top;
+	int j;
+	int max_visible = rows - 4;
+	int highest_visible_index = max_visible / 2 - 3;
+	int padding_len;
+	int k;
 
-	for (; i < rows - 4; i += 2)
+	if (state.selected_index >= highest_visible_index)
+	{
+		state.list_top = state.selected_index - highest_visible_index;
+	}
+	j = state.list_top;
+
+	for (; i < max_visible; i += 2)
 	{
 		get_pos(pos, i, 4);
 		printf("%s", pos);
+		padding_len = 30 - (3 + strlen(state.entries[j].entry_name));
+		if (j == state.selected_index)
+		{
+			printf("%c%s", ESC, BG_GREEN);
+		}
 		switch (state.entries[j].entry_type)
 		{
 		case DT_DIR:
-			printf("📁 ");
+			printf(" 📁 ");
 			break;
 		case DT_REG:
-			printf("📄 ");
+			printf(" 📄 ");
 			break;
 		case DT_LNK:
-			printf("🔗 ");
+			printf(" 🔗 ");
 			break;
 		}
 		printf("%s", state.entries[j].entry_name);
+		if (j == state.selected_index)
+		{
+			for (k = 0; k < padding_len; k++)
+			{
+				printf(" ");
+			}
+			printf("%c%s", ESC, RESET);
+		}
 		j += 1;
 		if (j >= state.n_entries)
 		{
 			break;
 		}
 	}
+	hide_cursor();
 }
 
 void render_window(int rows, int cols)

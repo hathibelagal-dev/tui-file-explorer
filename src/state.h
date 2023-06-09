@@ -35,10 +35,11 @@ struct fex_state
     int n_entries;
     int n_symlinks;
     int list_top;
-    long space_occupied;
+    int selected_index;
     struct dir_entry_info entries[MAX_FILES];
 
     int n_cols;
+    int n_rows;
 };
 
 struct fex_state state;

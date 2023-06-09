@@ -46,6 +46,8 @@ void set_directory_contents()
     state.n_files = 0;
     state.n_directories = 0;
     state.n_symlinks = 0;
+    state.list_top = 0;
+    state.selected_index = 0;
     int i = 0;
     for (;;)
     {
