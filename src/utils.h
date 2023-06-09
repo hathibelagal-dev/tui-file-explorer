@@ -14,4 +14,4 @@ void reset_cursor();
 void reset_console();
 void render();
 void get_pos(char *str, int v, int h);
-void goto_parent_directory(const char *);
+void goto_directory(const char *);
