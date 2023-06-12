@@ -43,6 +43,17 @@ void update_file_type()
         sprintf(full_path, "%s/%s",
                 state.current_path, state.entries[state.selected_index].entry_name);
         get_file_type(full_path, state.current_file_type);
+        state.has_file_type = true;
+    }
+    else if (state.entries[state.selected_index].entry_type == DT_DIR)
+    {
+        strcpy(state.current_file_type, "directory");
+        state.has_file_type = true;
+    }
+    else
+    {
+        strcpy(state.current_file_type, "🙈");
+        state.has_file_type = false;
     }
 }
 

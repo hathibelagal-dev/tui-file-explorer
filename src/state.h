@@ -37,6 +37,7 @@ struct fex_state
     int list_top;
     int selected_index;
     bool at_home;
+    bool has_file_type;
     struct dir_entry_info entries[MAX_FILES];
     char current_file_type[MAX_FILE_TYPE_LEN];
     char current_file_contents[MAX_FILE_CONTENTS_LEN];
