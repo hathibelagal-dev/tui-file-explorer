@@ -38,6 +38,8 @@ struct fex_state
     int selected_index;
     bool at_home;
     struct dir_entry_info entries[MAX_FILES];
+    char current_file_type[MAX_FILE_TYPE_LEN];
+    char current_file_contents[MAX_FILE_CONTENTS_LEN];
 
     int n_cols;
     int n_rows;
@@ -46,5 +48,6 @@ struct fex_state
 struct fex_state state;
 #endif
 
-void update_state();
-void set_directory_contents();
+void set_current_path(void);
+void update_state(void);
+void set_directory_contents(void);

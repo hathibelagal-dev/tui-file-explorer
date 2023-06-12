@@ -23,16 +23,18 @@
 #define MAX_FILE_LEN 64
 #define MAX_FILES 1024
 #define MAX_FILE_DISPLAY_ITEM_LEN 35
+#define MAX_FILE_TYPE_LEN 256
+#define MAX_FILE_CONTENTS_LEN 256
 #define GAP 13
 #define ESC 27
 #define POS_SIZE 16
 #endif
 
-void setup_console();
-void start_loop();
-void hide_cursor();
-void reset_cursor();
-void reset_console();
-void render();
+void setup_console(void);
+void start_loop(void);
+void hide_cursor(void);
+void reset_cursor(void);
+void reset_console(void);
+void render(void);
 void get_pos(char *str, int v, int h);
 bool goto_directory(const char *);

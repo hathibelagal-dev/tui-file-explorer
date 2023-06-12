@@ -16,7 +16,7 @@
  */
 
 #include "fex.h"
-int main(void)
+int main()
 {
 	setup_console();
 	start_loop();
