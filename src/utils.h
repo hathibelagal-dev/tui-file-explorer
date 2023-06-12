@@ -37,4 +37,4 @@ void reset_cursor(void);
 void reset_console(void);
 void render(void);
 void get_pos(char *str, int v, int h);
-bool goto_directory(const char *);
+bool goto_directory(const char *path);

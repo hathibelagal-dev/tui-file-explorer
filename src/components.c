@@ -27,6 +27,27 @@
 #include <string.h>
 #include "state.h"
 
+void show_file_type(int cols)
+{
+	int starting_col = MAX_FILE_DISPLAY_ITEM_LEN + 8;
+	int c_row = 5;
+	int c_idx = 0;
+	int c_col = starting_col;
+	int n = strlen(state.current_file_type);
+	char pos[POS_SIZE];
+	for (; c_idx < n; c_idx++)
+	{
+		get_pos(pos, c_row, c_col);
+		printf("%s%c", pos, state.current_file_type[c_idx]);
+		c_col += 1;
+		if (c_col > cols - 3)
+		{
+			c_col = starting_col;
+			c_row += 1;
+		}
+	}
+}
+
 void show_current_directory_header(int rows, int cols)
 {
 	char pos[POS_SIZE];
@@ -156,4 +177,5 @@ void render_window(int rows, int cols)
 	}
 	show_current_directory_header(rows, cols);
 	show_directory_contents(rows);
+	show_file_type(cols);
 }

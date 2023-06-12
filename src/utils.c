@@ -21,6 +21,7 @@
 #include <sys/ioctl.h>
 #include <termios.h>
 #include "state.h"
+#include "file_processor.h"
 #include <string.h>
 #include "components.h"
 #include <unistd.h>
@@ -64,6 +65,7 @@ bool goto_directory(const char *path)
     }
     strcpy(state.prev_path, state.current_path);
     update_state();
+    update_file_type();
     return true;
 }
 
@@ -109,6 +111,7 @@ void start_loop()
             {
                 state.selected_index = 0;
             }
+            update_file_type();
             valid = true;
             break;
         case 's':
@@ -117,6 +120,7 @@ void start_loop()
             {
                 state.selected_index = state.n_entries - 1;
             }
+            update_file_type();
             valid = true;
             break;
         case 'r':

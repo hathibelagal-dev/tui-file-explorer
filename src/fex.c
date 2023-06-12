@@ -16,8 +16,11 @@
  */
 
 #include "fex.h"
+#include "file_processor.h"
 int main()
 {
 	setup_console();
+	init_magic();
 	start_loop();
+	close_magic();
 }
