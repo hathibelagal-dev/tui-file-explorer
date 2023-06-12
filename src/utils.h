@@ -20,7 +20,7 @@
 #ifndef UTILS
 #define UTILS
 #define MAX_PATH_LEN 512
-#define MAX_FILE_LEN 64
+#define MAX_FILE_LEN 128
 #define MAX_FILES 1024
 #define MAX_FILE_DISPLAY_ITEM_LEN 35
 #define MAX_FILE_TYPE_LEN 256

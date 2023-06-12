@@ -25,6 +25,7 @@
 #include <stdbool.h>
 #include <dirent.h>
 #include <string.h>
+#include <ctype.h>
 #include "state.h"
 
 void show_file_type(int cols)
@@ -48,17 +49,21 @@ void show_file_type(int cols)
 		c_col += label_n;
 		for (; c_idx < n; c_idx++)
 		{
-			if (c_col == starting_col && state.current_file_type[c_idx] == ' ')
+			char current_character = state.current_file_type[c_idx];
+			if (c_col == starting_col && isspace(current_character))
 			{
 				continue;
 			}
-			get_pos(pos, c_row, c_col);
-			printf("%s%c", pos, state.current_file_type[c_idx]);
-			c_col += 1;
-			if (c_col > cols - 3)
+			if (isspace(current_character) || isprint(current_character))
 			{
-				c_col = starting_col;
-				c_row += 1;
+				get_pos(pos, c_row, c_col);
+				printf("%s%c", pos, current_character);
+				c_col += 1;
+				if (c_col > cols - 3)
+				{
+					c_col = starting_col;
+					c_row += 1;
+				}
 			}
 		}
 	}
@@ -157,7 +162,14 @@ void show_directory_contents(int rows)
 			printf(" 🔗 ");
 			break;
 		}
-		printf("%s", state.entries[j].entry_name);
+		char *file_name = state.entries[j].entry_name;
+		int file_name_len = strlen(file_name);
+		if (file_name_len >= MAX_FILE_DISPLAY_ITEM_LEN)
+		{
+			file_name += file_name_len - (MAX_FILE_DISPLAY_ITEM_LEN - 6);
+			printf("...");
+		}
+		printf("%s", file_name);
 		if (j == state.selected_index)
 		{
 			for (k = 0; k < padding_len; k++)

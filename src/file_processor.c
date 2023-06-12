@@ -37,11 +37,10 @@ void close_magic()
 
 void update_file_type()
 {
-    char full_path[MAX_PATH_LEN * 2];
+    char full_path[MAX_PATH_LEN];
     if (state.entries[state.selected_index].entry_type == DT_REG)
     {
-        sprintf(full_path, "%s/%s",
-                state.current_path, state.entries[state.selected_index].entry_name);
+        sprintf(full_path, "./%s", state.entries[state.selected_index].entry_name);
         get_file_type(full_path, state.current_file_type);
         state.has_file_type = true;
     }
