@@ -30,6 +30,10 @@
 
 void show_file_type(int cols)
 {
+	if (state.n_entries == 0)
+	{
+		return;
+	}
 	int starting_col = MAX_FILE_DISPLAY_ITEM_LEN + 8;
 	int c_row = 5;
 	int c_idx = 0;
@@ -140,48 +144,51 @@ void show_directory_contents(int rows)
 		state.list_top = state.selected_index - highest_visible_index;
 	}
 	j = state.list_top;
-
-	for (; i < max_visible; i += 2)
+	if (state.n_entries > 0)
 	{
-		get_pos(pos, i, 4);
-		printf("%s", pos);
-		padding_len = MAX_FILE_DISPLAY_ITEM_LEN - (3 + strlen(state.entries[j].entry_name));
-		if (j == state.selected_index)
+
+		for (; i < max_visible; i += 2)
 		{
-			printf("%c%s", ESC, BG_GREEN);
-		}
-		switch (state.entries[j].entry_type)
-		{
-		case DT_DIR:
-			printf(" 📁 ");
-			break;
-		case DT_REG:
-			printf(" 📄 ");
-			break;
-		case DT_LNK:
-			printf(" 🔗 ");
-			break;
-		}
-		char *file_name = state.entries[j].entry_name;
-		int file_name_len = strlen(file_name);
-		if (file_name_len >= MAX_FILE_DISPLAY_ITEM_LEN)
-		{
-			file_name += file_name_len - (MAX_FILE_DISPLAY_ITEM_LEN - 6);
-			printf("...");
-		}
-		printf("%s", file_name);
-		if (j == state.selected_index)
-		{
-			for (k = 0; k < padding_len; k++)
+			get_pos(pos, i, 4);
+			printf("%s", pos);
+			padding_len = MAX_FILE_DISPLAY_ITEM_LEN - (3 + strlen(state.entries[j].entry_name));
+			if (j == state.selected_index)
 			{
-				printf(" ");
+				printf("%c%s", ESC, BG_GREEN);
 			}
-			printf("%c%s", ESC, RESET);
-		}
-		j += 1;
-		if (j >= state.n_entries)
-		{
-			break;
+			switch (state.entries[j].entry_type)
+			{
+			case DT_DIR:
+				printf(" 📁 ");
+				break;
+			case DT_REG:
+				printf(" 📄 ");
+				break;
+			case DT_LNK:
+				printf(" 🔗 ");
+				break;
+			}
+			char *file_name = state.entries[j].entry_name;
+			int file_name_len = strlen(file_name);
+			if (file_name_len >= MAX_FILE_DISPLAY_ITEM_LEN)
+			{
+				file_name += file_name_len - (MAX_FILE_DISPLAY_ITEM_LEN - 6);
+				printf("...");
+			}
+			printf("%s", file_name);
+			if (j == state.selected_index)
+			{
+				for (k = 0; k < padding_len; k++)
+				{
+					printf(" ");
+				}
+				printf("%c%s", ESC, RESET);
+			}
+			j += 1;
+			if (j >= state.n_entries)
+			{
+				break;
+			}
 		}
 	}
 	hide_cursor();
