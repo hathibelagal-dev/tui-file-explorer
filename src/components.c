@@ -34,9 +34,17 @@ void show_file_type(int cols)
 	int c_idx = 0;
 	int c_col = starting_col;
 	int n = strlen(state.current_file_type);
+	int label_n = strlen("File type: ");
 	char pos[POS_SIZE];
+	get_pos(pos, c_row, c_col);
+	printf("%s%c%sFile type: %c%s", pos, ESC, BOLD, ESC, RESET);
+	c_col += label_n;
 	for (; c_idx < n; c_idx++)
 	{
+		if (c_col == starting_col && state.current_file_type[c_idx] == ' ')
+		{
+			continue;
+		}
 		get_pos(pos, c_row, c_col);
 		printf("%s%c", pos, state.current_file_type[c_idx]);
 		c_col += 1;

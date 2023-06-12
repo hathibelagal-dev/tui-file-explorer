@@ -33,6 +33,7 @@
 void setup_console(void);
 void start_loop(void);
 void hide_cursor(void);
+void show_cursor(void);
 void reset_cursor(void);
 void reset_console(void);
 void render(void);

@@ -47,6 +47,11 @@ void hide_cursor()
     printf("%c[?25l", ESC);
 }
 
+void show_cursor()
+{
+    printf("%c[?25h", ESC);
+}
+
 void get_pos(char *str, int row, int col)
 {
     sprintf(str, "%c[%d;%dH", ESC, row, col);
@@ -77,6 +82,7 @@ void reset_cursor()
 void reset_console()
 {
     reset_cursor();
+    show_cursor();
     tcsetattr(fileno(stdin), TCSANOW, &original_config);
 }
 
@@ -161,6 +167,7 @@ void render()
         state.n_cols = window_size.ws_col;
         state.n_rows = window_size.ws_row;
         update_state();
+        update_file_type();
     }
     render_window(window_size.ws_row, window_size.ws_col);
 }
