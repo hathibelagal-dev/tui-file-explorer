@@ -28,16 +28,19 @@
 #include <ctype.h>
 #include "state.h"
 
-void show_file_type(int cols)
+#define RIGHT_PANEL_GAP 8
+#define HEADER_HEIGHT 4
+
+int show_file_type(int cols)
 {
-	if (state.n_entries == 0)
-	{
-		return;
-	}
-	int starting_col = MAX_FILE_DISPLAY_ITEM_LEN + 8;
-	int c_row = 5;
+	int starting_col = MAX_FILE_DISPLAY_ITEM_LEN + RIGHT_PANEL_GAP;
+	int c_row = HEADER_HEIGHT + 1;
 	int c_idx = 0;
 	int c_col = starting_col;
+	if (state.n_entries == 0)
+	{
+		return c_row + 1;
+	}
 	int n = strlen(state.current_file_type);
 	char *label = "File type: ";
 	int label_n = strlen(label);
@@ -79,6 +82,7 @@ void show_file_type(int cols)
 		printf("%s%c", pos, '-');
 		c_col += 1;
 	}
+	return c_row + 1;
 }
 
 void show_current_directory_header(int rows, int cols)
@@ -119,7 +123,7 @@ void show_current_directory_header(int rows, int cols)
 	}
 	if (empty)
 	{
-		printf("🤷 Empty directory");
+		printf("🤷 Empty directory 👻👻");
 	}
 	get_pos(pos, 4, 3);
 	printf("%s", pos);
@@ -132,7 +136,7 @@ void show_current_directory_header(int rows, int cols)
 void show_directory_contents(int rows)
 {
 	char pos[POS_SIZE];
-	int i = 5;
+	int i = HEADER_HEIGHT + 1;
 	int j;
 	int max_visible = rows - 2;
 	int highest_visible_index = max_visible / 2 - 3;
@@ -146,7 +150,6 @@ void show_directory_contents(int rows)
 	j = state.list_top;
 	if (state.n_entries > 0)
 	{
-
 		for (; i < max_visible; i += 2)
 		{
 			get_pos(pos, i, 4);
@@ -173,14 +176,14 @@ void show_directory_contents(int rows)
 			if (file_name_len >= MAX_FILE_DISPLAY_ITEM_LEN)
 			{
 				file_name += file_name_len - (MAX_FILE_DISPLAY_ITEM_LEN - 6);
-				printf("...");
+				printf("…");
 			}
 			printf("%s", file_name);
 			if (j == state.selected_index)
 			{
 				for (k = 0; k < padding_len; k++)
 				{
-					printf(" ");
+					putchar(' ');
 				}
 				printf("%c%s", ESC, RESET);
 			}
@@ -192,6 +195,12 @@ void show_directory_contents(int rows)
 		}
 	}
 	hide_cursor();
+}
+
+void show_file_contents(int starting_row, int rows, int cols)
+{
+	int starting_col = MAX_FILE_DISPLAY_ITEM_LEN + RIGHT_PANEL_GAP;
+	char pos[POS_SIZE];
 }
 
 void render_window(int rows, int cols)
@@ -220,5 +229,5 @@ void render_window(int rows, int cols)
 	}
 	show_current_directory_header(rows, cols);
 	show_directory_contents(rows);
-	show_file_type(cols);
+	show_file_contents(show_file_type(cols), rows, cols);
 }

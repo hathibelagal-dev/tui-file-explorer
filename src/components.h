@@ -18,4 +18,5 @@
 void render_window(int rows, int cols);
 void show_current_directory_header(int rows, int cols);
 void show_directory_contents(int rows);
-void show_file_type(int cols);
+void show_file_contents(int starting_row, int rows, int cols);
+int show_file_type(int cols);

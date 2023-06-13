@@ -25,4 +25,4 @@ void init_magic(void);
 void close_magic(void);
 void get_file_type(const char *file_name, char *output);
 void get_file_contents(const char *file_name, char *output);
-void update_file_type(void);
+void update_file_type_and_contents(void);

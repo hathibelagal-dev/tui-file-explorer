@@ -70,7 +70,7 @@ bool goto_directory(const char *path)
     }
     strcpy(state.prev_path, state.current_path);
     update_state();
-    update_file_type();
+    update_file_type_and_contents();
     return true;
 }
 
@@ -117,7 +117,7 @@ void start_loop()
             {
                 state.selected_index = 0;
             }
-            update_file_type();
+            update_file_type_and_contents();
             valid = true;
             break;
         case 's':
@@ -126,7 +126,7 @@ void start_loop()
             {
                 state.selected_index = state.n_entries - 1;
             }
-            update_file_type();
+            update_file_type_and_contents();
             valid = true;
             break;
         case 'r':
@@ -167,7 +167,7 @@ void render()
         state.n_cols = window_size.ws_col;
         state.n_rows = window_size.ws_row;
         update_state();
-        update_file_type();
+        update_file_type_and_contents();
     }
     render_window(window_size.ws_row, window_size.ws_col);
 }

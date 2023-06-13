@@ -35,13 +35,18 @@ void close_magic()
     magic_close(magic_cookie);
 }
 
-void update_file_type()
+void update_file_type_and_contents()
 {
     char full_path[MAX_PATH_LEN];
+    if (state.n_entries == 0)
+    {
+        return;
+    }
     if (state.entries[state.selected_index].entry_type == DT_REG)
     {
         sprintf(full_path, "./%s", state.entries[state.selected_index].entry_name);
         get_file_type(full_path, state.current_file_type);
+        get_file_contents(full_path, state.current_file_contents);
         state.has_file_type = true;
     }
     else if (state.entries[state.selected_index].entry_type == DT_DIR)
@@ -71,4 +76,8 @@ void get_file_type(const char *file_name, char *output)
 
 void get_file_contents(const char *file_name, char *output)
 {
+    FILE *fp = fopen(file_name, "rb");
+    const size_t n_bytes = fread(output, sizeof(char), MAX_FILE_CONTENTS_LEN, fp);
+    output[n_bytes] = '\0';
+    fclose(fp);
 }
