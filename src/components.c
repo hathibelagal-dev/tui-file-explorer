@@ -201,6 +201,36 @@ void show_file_contents(int starting_row, int rows, int cols)
 {
 	int starting_col = MAX_FILE_DISPLAY_ITEM_LEN + RIGHT_PANEL_GAP;
 	char pos[POS_SIZE];
+	int c_idx = 0;
+	int c_col = starting_col;
+	int c_row = starting_row;
+	int n = strlen(state.current_file_contents);
+	if (n == 0)
+	{
+		return;
+	}
+	get_pos(pos, c_row, c_col);
+	printf("%s%c%s🕵️  Hex preview %c%s", pos, ESC, BOLD, ESC, RESET);
+	c_row += 2;
+	for (; c_idx < n; c_idx++)
+	{
+		get_pos(pos, c_row, c_col);
+		if (state.current_file_contents[c_idx] < 1)
+		{
+			continue;
+		}
+		printf("%s%02x ", pos, state.current_file_contents[c_idx]);
+		c_col += 3;
+		if (c_col > cols - 4)
+		{
+			c_col = starting_col;
+			c_row += 1;
+			if (c_row > rows - 3)
+			{
+				break;
+			}
+		}
+	}
 }
 
 void render_window(int rows, int cols)

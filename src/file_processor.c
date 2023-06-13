@@ -40,6 +40,8 @@ void update_file_type_and_contents()
     char full_path[MAX_PATH_LEN];
     if (state.n_entries == 0)
     {
+        strcpy(state.current_file_contents, "");
+        strcpy(state.current_file_type, "");
         return;
     }
     if (state.entries[state.selected_index].entry_type == DT_REG)
@@ -52,6 +54,7 @@ void update_file_type_and_contents()
     else if (state.entries[state.selected_index].entry_type == DT_DIR)
     {
         strcpy(state.current_file_type, "directory");
+        strcpy(state.current_file_contents, "");
         state.has_file_type = true;
     }
     else
