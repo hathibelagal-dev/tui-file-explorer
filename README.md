@@ -2,7 +2,7 @@
 
 - Just a beautiful file explorer that runs in the terminal.
 - Written in pure C, so it's extremely fast and lightweight.
-- The executable is just *18560 bytes*!
+- The executable is just *19016 bytes*!
 - **Still a WIP**
 
 ### Screenshots
