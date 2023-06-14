@@ -9,11 +9,13 @@
 
 Running on Ubuntu 18.04.3 LTS
 
-![Screenshot from 2023-06-12 21-00-00](https://github.com/hathibelagal-dev/tui-file-explorer/assets/42626106/15836081-98e4-4d01-9f3a-171b4eafb9bc)
+![Screenshot from 2023-06-15 00-23-05](https://github.com/hathibelagal-dev/tui-file-explorer/assets/42626106/dd88cb2e-4c64-4e91-8fb4-1120c8a54fdd)
+
+![Screenshot from 2023-06-15 00-19-40](https://github.com/hathibelagal-dev/tui-file-explorer/assets/42626106/8b573821-7083-433b-ac9b-bf17b8f18e1a)
 
 Running inside VS Code's terminal
 
-![Screenshot from 2023-06-13 00-42-02](https://github.com/hathibelagal-dev/tui-file-explorer/assets/42626106/74879182-ed55-4ed1-b918-2d73e9a80392)
+![Screenshot from 2023-06-15 00-23-38](https://github.com/hathibelagal-dev/tui-file-explorer/assets/42626106/50c9e48a-91e8-4684-889f-8571be6b8e1e)
 
 ### ⌨️ Controls
 
