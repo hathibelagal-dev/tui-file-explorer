@@ -41,6 +41,7 @@ struct fex_state
     struct dir_entry_info entries[MAX_FILES];
     char current_file_type[MAX_FILE_TYPE_LEN];
     char current_file_contents[MAX_FILE_CONTENTS_LEN];
+    long current_file_size;
 
     int n_cols;
     int n_rows;

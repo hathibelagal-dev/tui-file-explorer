@@ -23,6 +23,7 @@
 #include <string.h>
 #include "state.h"
 #include <stdlib.h>
+#include <sys/stat.h>
 
 void init_magic()
 {
@@ -49,6 +50,7 @@ void update_file_type_and_contents()
         sprintf(full_path, "./%s", state.entries[state.selected_index].entry_name);
         get_file_type(full_path, state.current_file_type);
         get_file_contents(full_path, state.current_file_contents);
+        get_file_size(full_path, &state.current_file_size);
         state.has_file_type = true;
     }
     else if (state.entries[state.selected_index].entry_type == DT_DIR)
@@ -56,11 +58,14 @@ void update_file_type_and_contents()
         strcpy(state.current_file_type, "directory");
         strcpy(state.current_file_contents, "");
         state.has_file_type = true;
+        state.current_file_size = 0;
     }
     else
     {
         strcpy(state.current_file_type, "🙈");
+        strcpy(state.current_file_contents, "");
         state.has_file_type = false;
+        state.current_file_size = 0;
     }
 }
 
@@ -83,4 +88,11 @@ void get_file_contents(const char *file_name, char *output)
     const size_t n_bytes = fread(output, sizeof(char), MAX_FILE_CONTENTS_LEN, fp);
     output[n_bytes] = '\0';
     fclose(fp);
+}
+
+void get_file_size(const char *file_name, long *size)
+{
+    struct stat st;
+    stat(file_name, &st);
+    *size = st.st_size;
 }

@@ -173,7 +173,7 @@ void show_directory_contents(int rows)
 			}
 			char *file_name = state.entries[j].entry_name;
 			int file_name_len = strlen(file_name);
-			if (file_name_len >= MAX_FILE_DISPLAY_ITEM_LEN)
+			if (file_name_len >= MAX_FILE_DISPLAY_ITEM_LEN - 2)
 			{
 				file_name += file_name_len - (MAX_FILE_DISPLAY_ITEM_LEN - 6);
 				printf("…");
@@ -197,6 +197,31 @@ void show_directory_contents(int rows)
 	hide_cursor();
 }
 
+const char *get_emoji_for_size(long size)
+{
+	if (size < 1000l)
+	{
+		return "🐜";
+	}
+	if (size < 50000l)
+	{
+		return "🐀";
+	}
+	if (size < 150000l)
+	{
+		return "🐈";
+	}
+	if (size < 500000l)
+	{
+		return "🐕";
+	}
+	if (size < 10000000l)
+	{
+		return "🐄";
+	}
+	return "🐘";
+}
+
 void show_file_contents(int starting_row, int rows, int cols)
 {
 	int starting_col = MAX_FILE_DISPLAY_ITEM_LEN + RIGHT_PANEL_GAP;
@@ -210,16 +235,46 @@ void show_file_contents(int starting_row, int rows, int cols)
 		return;
 	}
 	get_pos(pos, c_row, c_col);
-	printf("%s%c%s🕵️  Hex preview %c%s", pos, ESC, BOLD, ESC, RESET);
+	printf("%s%c%sSize: %c%s%ld bytes ", pos, ESC, BOLD, ESC, RESET, state.current_file_size);
+	printf("%s", get_emoji_for_size(state.current_file_size));
+	c_row += 1;
+	for (c_col = starting_col - 1; c_col <= cols - 2; c_col++)
+	{
+		get_pos(pos, c_row, c_col);
+		printf("%s-", pos);
+	}
+	c_col = starting_col;
+	c_row += 1;
+	get_pos(pos, c_row, c_col);
+	printf("%s%c%s🧐 Hex preview: %c%s", pos, ESC, BOLD, ESC, RESET);
 	c_row += 2;
 	for (; c_idx < n; c_idx++)
 	{
 		get_pos(pos, c_row, c_col);
-		if (state.current_file_contents[c_idx] < 1)
+		char current = state.current_file_contents[c_idx];
+		if (current < 1)
 		{
 			continue;
 		}
-		printf("%s%02x ", pos, state.current_file_contents[c_idx]);
+		printf("%s", pos);
+		if (isalpha(current))
+		{
+			printf("%c%s", ESC, GREEN);
+		}
+		if (ispunct(current))
+		{
+			printf("%c%s", ESC, YELLOW);
+		}
+		if (isdigit(current))
+		{
+			printf("%c%s", ESC, CYAN);
+		}
+		if (isblank(current))
+		{
+			printf("%c%s", ESC, RED);
+		}
+		printf("%02x ", current);
+		printf("%c%s", ESC, RESET);
 		c_col += 3;
 		if (c_col > cols - 4)
 		{

@@ -21,4 +21,7 @@
 #define BLUE "[34m"
 #define BG_GREEN "[42m"
 #define BG_BLUE "[44m"
+#define YELLOW "[33m"
+#define CYAN "[36m"
+#define RED "[31m"
 #endif
