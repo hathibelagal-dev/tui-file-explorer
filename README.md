@@ -17,6 +17,17 @@ Running inside VS Code's terminal
 
 ![Screenshot from 2023-06-15 00-23-38](https://github.com/hathibelagal-dev/tui-file-explorer/assets/42626106/50c9e48a-91e8-4684-889f-8571be6b8e1e)
 
+### Build and Run
+
+On Ubuntu
+
+```bash
+sudo apt install libmagic-dev
+make
+bin/fex
+```
+You can use `make fast` to create a larger, but faster, binary.
+
 ### ⌨️ Controls
 
 **w** - go up a file
