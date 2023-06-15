@@ -36,6 +36,12 @@ void close_magic()
     magic_close(magic_cookie);
 }
 
+void resetCounts()
+{
+    state.current_file_size = 0;
+    state.content_bytes_read = 0;
+}
+
 void update_file_type_and_contents()
 {
     char full_path[MAX_PATH_LEN];
@@ -43,6 +49,7 @@ void update_file_type_and_contents()
     {
         strcpy(state.current_file_contents, "");
         strcpy(state.current_file_type, "");
+        resetCounts();
         return;
     }
     if (state.entries[state.selected_index].entry_type == DT_REG)
@@ -58,14 +65,14 @@ void update_file_type_and_contents()
         strcpy(state.current_file_type, "directory");
         strcpy(state.current_file_contents, "");
         state.has_file_type = true;
-        state.current_file_size = 0;
+        resetCounts();
     }
     else
     {
         strcpy(state.current_file_type, "🙈");
         strcpy(state.current_file_contents, "");
         state.has_file_type = false;
-        state.current_file_size = 0;
+        resetCounts();
     }
 }
 
@@ -87,6 +94,7 @@ void get_file_contents(const char *file_name, char *output)
     FILE *fp = fopen(file_name, "rb");
     const size_t n_bytes = fread(output, sizeof(char), MAX_FILE_CONTENTS_LEN, fp);
     output[n_bytes] = '\0';
+    state.content_bytes_read = n_bytes;
     fclose(fp);
 }
 

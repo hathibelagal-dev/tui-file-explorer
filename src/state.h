@@ -42,6 +42,7 @@ struct fex_state
     char current_file_type[MAX_FILE_TYPE_LEN];
     char current_file_contents[MAX_FILE_CONTENTS_LEN];
     long current_file_size;
+    long content_bytes_read;
 
     int n_cols;
     int n_rows;

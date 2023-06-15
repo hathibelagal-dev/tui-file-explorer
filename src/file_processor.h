@@ -27,3 +27,4 @@ void get_file_type(const char *file_name, char *output);
 void get_file_contents(const char *file_name, char *output);
 void get_file_size(const char *file_name, long *size);
 void update_file_type_and_contents(void);
+void resetCounts(void);

@@ -229,7 +229,7 @@ void show_file_contents(int starting_row, int rows, int cols)
 	int c_idx = 0;
 	int c_col = starting_col;
 	int c_row = starting_row;
-	int n = strlen(state.current_file_contents);
+	int n = state.content_bytes_read;
 	if (n == 0)
 	{
 		return;
@@ -252,7 +252,7 @@ void show_file_contents(int starting_row, int rows, int cols)
 	{
 		get_pos(pos, c_row, c_col);
 		char current = state.current_file_contents[c_idx];
-		if (current < 1)
+		if (current < 0)
 		{
 			continue;
 		}
