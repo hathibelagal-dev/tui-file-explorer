@@ -1,9 +1,12 @@
-# tui-file-explorer
+# 🗄️ tui-file-explorer
 
-- Just a beautiful file explorer that runs in the terminal.
-- Written in pure C, so it's extremely fast and lightweight.
-- The executable is just *19016 bytes*!
-- **Still a WIP**
+🖥️ Just a pretty file explorer that runs in the terminal
+
+🔥 Written in pure C, so it's extremely fast and lightweight
+
+🥦 The executable is just *19016 bytes*
+
+🚀 **Rapidly improving**
 
 ### Screenshots
 
