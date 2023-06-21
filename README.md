@@ -1,6 +1,7 @@
 # 🗄️ tui-file-explorer
 
 - 🖥️ A pretty file explorer that runs in the terminal. Instantly preview files in hex, determine strings present in binary files, and know file signatures. Very handy tool if you're participating in a CTF, reverse engineering stuff, or just want to be more efficient while exploring folders.
+  
 - 🔥 Written in pure C, so it's extremely fast and lightweight
 - 🥦 The executable is just *19048 bytes*
 - 🚀 **Rapidly improving**
