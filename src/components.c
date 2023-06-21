@@ -225,11 +225,13 @@ const char *get_emoji_for_size(long size)
 void show_file_contents(int starting_row, int rows, int cols)
 {
 	int starting_col = MAX_FILE_DISPLAY_ITEM_LEN + RIGHT_PANEL_GAP;
+	char *preview_label = state.is_hex_preview ? "Hex" : "ASCII";
 	char pos[POS_SIZE];
 	int c_idx = 0;
 	int c_col = starting_col;
 	int c_row = starting_row;
 	int n = state.content_bytes_read;
+	bool character_shown = false;
 	if (n == 0)
 	{
 		return;
@@ -246,7 +248,7 @@ void show_file_contents(int starting_row, int rows, int cols)
 	c_col = starting_col;
 	c_row += 1;
 	get_pos(pos, c_row, c_col);
-	printf("%s%c%s🧐 Hex preview: %c%s", pos, ESC, BOLD, ESC, RESET);
+	printf("%s%c%s🧐 %s preview: %c%s", pos, ESC, BOLD, preview_label, ESC, RESET);
 	c_row += 2;
 	for (; c_idx < n; c_idx++)
 	{
@@ -273,9 +275,34 @@ void show_file_contents(int starting_row, int rows, int cols)
 		{
 			printf("%c%s", ESC, RED);
 		}
-		printf("%02x ", current);
+		if (state.is_hex_preview)
+		{
+			printf("%02x ", current);
+		}
+		else
+		{
+			if (isprint(current))
+			{
+				character_shown = true;
+				printf("%c", current);
+			}
+			else
+			{
+				character_shown = false;
+			}
+		}
 		printf("%c%s", ESC, RESET);
-		c_col += 3;
+		if (state.is_hex_preview)
+		{
+			c_col += 3;
+		}
+		else
+		{
+			if (character_shown)
+			{
+				c_col += 1;
+			}
+		}
 		if (c_col > cols - 4)
 		{
 			c_col = starting_col;

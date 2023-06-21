@@ -38,6 +38,7 @@ struct fex_state
     int selected_index;
     bool at_home;
     bool has_file_type;
+    bool is_hex_preview;
     struct dir_entry_info entries[MAX_FILES];
     char current_file_type[MAX_FILE_TYPE_LEN];
     char current_file_contents[MAX_FILE_CONTENTS_LEN];

@@ -4,7 +4,7 @@
 
 🔥 Written in pure C, so it's extremely fast and lightweight
 
-🥦 The executable is just *19016 bytes*
+🥦 The executable is just *19048 bytes*
 
 🚀 **Rapidly improving**
 
@@ -36,6 +36,8 @@ You can use `make fast` to create a larger, but faster, binary.
 **w** - go up a file
 
 **s** - go down a file
+
+**t** - toggle between hex and ASCII preview
 
 **space** - select current directory
 

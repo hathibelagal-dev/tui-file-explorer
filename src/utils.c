@@ -90,6 +90,7 @@ void start_loop()
 {
     char input = 0;
     bool valid = true;
+    state.is_hex_preview = true;
     char home[MAX_PATH_LEN] = "\0";
     {
         char *t_home;
@@ -130,6 +131,10 @@ void start_loop()
             valid = true;
             break;
         case 'r':
+            valid = true;
+            break;
+        case 't':
+            state.is_hex_preview = !state.is_hex_preview;
             valid = true;
             break;
         case ' ':
